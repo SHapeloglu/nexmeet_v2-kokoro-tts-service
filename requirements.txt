@@ -1,0 +1,12 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic>=2.0.0
+kokoro-onnx>=0.4.0
+openai-whisper
+deep-translator
+torch==2.6.0
+torchaudio==2.6.0
+soundfile
+aiofiles
+python-dotenv
+ffmpeg-python

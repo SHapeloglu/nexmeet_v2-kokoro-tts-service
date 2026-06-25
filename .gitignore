@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Ortam
+.env
+
+# Kullanıcı verileri — commit edilmez
+voice_profiles/
+temp_recordings/
+recordings/
+
+# Model ağırlıkları
+*.pt
+*.onnx
+
+# OS
+.DS_Store
+.env
+__pycache__/
+venv/
+voice_profiles/*
+recordings/*
+temp_recordings/*
