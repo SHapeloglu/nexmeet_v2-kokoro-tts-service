@@ -1,43 +1,25 @@
-# session.md — 🎙️ NexMeet Kokoro TTS Service Oturum Günlüğü
-
-Her çalışma oturumunda buraya kısa bir kayıt düşülür: ne yapıldı, hangi kararlar alındı, sıradaki adım ne. Amaç, bir sonraki oturuma (veya başka bir geliştiriciye/Claude örneğine) hızlıca bağlam aktarmak.
-
----
-
-## Şablon
-
-```markdown
-## YYYY-AA-GG
-
-**Yapılanlar:**
-- ...
-
-**Alınan kararlar / neden:**
-- ...
-
-**Açık sorunlar / bilinen eksikler:**
-- ...
-
-**Sıradaki adım:**
-- ...
-```
+# session.md — NexMeet Kokoro TTS Service (v2) Oturum Günlüğü
 
 ---
 
 ## 2026-10-05
 
-**Yapılanlar:**
-- Eksik proje çalışma dosyaları oluşturuldu: `architect.md`, `backlog.md`, `CLAUDE.md`, `session.md`, `task.md`.
-- İçerik; README, dosya yapısı, bağımlılık dosyaları ve git geçmişinden çıkarıldı.
+- Şablondan üretilmiş çalışma dosyaları kod okunarak yeniden yazıldı; canlı servisin v3 (`/root/nexmeet-tts`) olduğu not edildi.
 
-**Açık sorunlar / bilinen eksikler:**
-- Otomatik test bulunamadı — kritik akışlar için en azından duman (smoke) testleri eklenmeli.
-- `requirements.txt` içinde sürümü sabitlenmemiş 6 paket var (ör. `openai-whisper`) — tekrarlanabilir kurulum için sabitlenmeli.
+---
 
-**Sıradaki adım:**
-- `CLAUDE.md` ve `architect.md` içeriğini gözden geçirip proje sahibinin bilgisiyle tamamla.
+## 2026-06-25
 
-### Bu tarihten önceki son commit'ler (referans)
+- Kokoro TTS service initial commit (GPU, ses klonlama tasarımı).
 
-- 2026-06-25 — Add files via upload
-- 2026-06-25 — Kokoro TTS service initial commit
+---
+
+### Kayıt Şablonu
+
+```markdown
+## YYYY-AA-GG
+**Yapılanlar:** ...
+**Kararlar / neden:** ...
+**Açık sorunlar:** ...
+**Sıradaki adım:** ...
+```

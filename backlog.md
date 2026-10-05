@@ -1,21 +1,13 @@
-# backlog.md — 🎙️ NexMeet Kokoro TTS Service Fikir / Özellik Havuzu
+# backlog.md — NexMeet Kokoro TTS Service (v2) Fikir Havuzu
 
-Bu dosya henüz önceliklendirilmemiş, "bir gün yapılabilir" fikirler ve özellik talepleri içindir. Bir fikir somutlaşıp sıraya girdiğinde buradan çıkar, `task.md`ye taşınır.
-
-## Fikirler
-
-_(henüz boş — yeni bir fikir geldiğinde aşağıdaki şablonla ekle)_
-
-## Koddaki TODO / FIXME Notları
-
-_(kodda TODO/FIXME notu bulunamadı)_
+- v3 (CPU) ve v2 (GPU klonlama) arasında yapılandırmayla seçilebilen tek servis — `TTS_BACKEND=kokoro|chatterbox`.
+- `_peer_hash` ile güvenli profil adlandırmasını v3'e taşı.
 
 ## Ekleme Şablonu
 
 ```markdown
 ### Başlık
-
 - **Kategori:** yeni özellik / iyileştirme / teknik borç / araştırma
-- **Neden istendi:** kısa gerekçe
-- **Notlar:** büyüklük tahmini, bağımlılıklar, riskler
+- **Neden:** kısa gerekçe
+- **Notlar:** büyüklük, bağımlılıklar, riskler
 ```

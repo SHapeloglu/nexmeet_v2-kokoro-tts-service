@@ -1,50 +1,22 @@
-# CLAUDE.md
+# CLAUDE.md — NexMeet Kokoro TTS Service (v2, GPU tasarımı — arşiv)
 
-Bu dosya, bu proje üzerinde çalışırken Claude'un (Claude Code dahil) izlemesi gereken bağlamı ve kuralları içerir.
+NexMeet v2 için tasarlanan **ses klonlamalı** konuşma çevirisi servisi: Whisper **small** (STT) → deep-translator (TR→EN) → **ChatterboxTTS** ile konuşmacının klonlanmış sesi (`core/cloner.py`, CUDA varsa GPU). Hedef ortam AWS EC2 g4dn.xlarge (NVIDIA T4), `/home/ubuntu/kokoro-tts-service`, systemd `kokoro-tts.service`, port 5000. Ek: kuyruk (`core/queue.py`), parçalama (`core/chunker.py`), kayıt yöneticisi (`core/recorder.py`).
 
-## Proje
+- GitHub: https://github.com/SHapeloglu/nexmeet_v2-kokoro-tts-service — **PUBLIC repo** (tek yükleme, 2026-06-25)
+- **Canlıda kullanılan servis bu değil:** `/root/nexmeet-tts` (repo `nexmeet-tts_v3`) — CPU'da Kokoro ONNX + faster-whisper tiny, ses klonlama yok. GPU maliyeti nedeniyle bu tasarım askıda.
+- Mimari: `architect.md` · Görevler: `task.md` · Fikirler: `backlog.md` · Günlük: `session.md`
 
-**🎙️ NexMeet Kokoro TTS Service** — Gerçek zamanlı video konferans için **ses klonlamalı konuşma çevirisi** servisi. Kullanıcı kendi sesinde **Türkçe** konuşur → sistem otomatik olarak **İngilizce**'ye çevirir ve konuşmacının **klonlanmış sesiyle** karşı tarafa iletir.
-
-- GitHub: https://github.com/SHapeloglu/nexmeet_v2-kokoro-tts-service
-
-## Teknoloji Yığını
-
-- FastAPI
-- PyTorch
-- OpenAI API
-- Uvicorn
-- Docker / docker compose
-
-## Önemli Dosyalar
-
-- `Dockerfile`
-- `kokoro-tts.service`
-- `main.py`
-- `requirements.txt`
-
-Mimari ayrıntılar için bkz. `architect.md`.
-
-## Sık Kullanılan Komutlar
+## Çalıştırma (GPU'lu makinede)
 
 ```bash
-python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt
-python main.py
+python -m venv venv && . venv/bin/activate && pip install -r requirements.txt   # torch 2.6, openai-whisper, kokoro-onnx
+cp .env.example .env     # API_KEY, NEXMEET_URL, PORT, HOST
+uvicorn main:app --host 0.0.0.0 --port 5000     # ya da kokoro-tts.service
 ```
 
 ## Kurallar
 
-- Yapılandırmayı ortam değişkenlerinden oku; endpoint şemalarını Pydantic modelleriyle tanımla.
-- Bloklayan I/O işlemlerini async endpoint içinde doğrudan çağırma.
-- `.env`, parola, token ve API anahtarlarını asla commit etme.
-- Her çalışma oturumunun sonunda `session.md`ye kısa kayıt düş; görev durumunu `task.md`de güncelle.
-- Önceliklendirilmemiş fikirleri `backlog.md`ye yaz; somutlaşınca `task.md`ye taşı.
-
-## Çalışma Dosyaları
-
-| Dosya | Amaç |
-|---|---|
-| `architect.md` | Mimari ve dizin yapısı referansı |
-| `task.md` | Aktif / devam eden / tamamlanan görevler |
-| `backlog.md` | Önceliklendirilmemiş fikir ve teknik borç havuzu |
-| `session.md` | Oturum günlüğü — her oturum sonunda güncellenir |
+- Bu repoda değişiklik yapmadan önce kullanıcıya sor; canlı TTS işi `/root/nexmeet-tts`'te.
+- API sözleşmesi (`/synthesize`, `/voice-profile`, `/voice-profile/{peer_id}`, `/health`, `X-API-Key`) v3 ile aynı — sözleşmeyi değiştirirsen ikisini birlikte değiştir.
+- `requirements.txt`'te `chatterbox` paketi yok ama `core/cloner.py` import ediyor — kurulumda ayrıca gerekli.
+- Public repo: `.env`, IP, anahtar commit etme.

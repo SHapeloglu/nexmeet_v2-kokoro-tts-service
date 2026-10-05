@@ -1,62 +1,26 @@
-# architect.md — 🎙️ NexMeet Kokoro TTS Service Mimari Referansı
-
-Bu dosya projenin yapısının hızlı-referans özetidir. Kod değiştikçe güncel tutun.
-
-## Genel Bakış
-
-Gerçek zamanlı video konferans için **ses klonlamalı konuşma çevirisi** servisi. Kullanıcı kendi sesinde **Türkçe** konuşur → sistem otomatik olarak **İngilizce**'ye çevirir ve konuşmacının **klonlanmış sesiyle** karşı tarafa iletir.
-
-## Teknoloji Yığını
-
-- FastAPI
-- PyTorch
-- OpenAI API
-- Uvicorn
-- Docker / docker compose
-
-## Dizin Yapısı
+# architect.md — NexMeet Kokoro TTS Service (v2) Mimarisi
 
 ```
-.env.example
-.gitignore
-Dockerfile
-README.md
-core/
-  __init__.py
-  chunker.py
-  cloner.py
-  engine.py
-  queue.py
-  recorder.py
-kokoro-tts.service
-main.py
-requirements.txt
+NexMeet backend ──X-API-Key──► main.py (FastAPI, 0.0.0.0:5000, EC2 g4dn)
+   startup → TTSEngine.get_instance().initialize()  (Whisper "small" + TTS modeli yüklenir)
+   POST /synthesize ─► tts_queue ─► TTSEngine.process_speech
+        transcribe (whisper) → translate (deep-translator) → synthesize (KokoClone/ChatterboxTTS, konuşmacı profili ile)
+        → RecordingManager (oturum kaydı)
+   POST /voice-profile → profil WAV (peer hash'i ile dosya adı)
+   GET  /voice-profile/{peer_id}, GET /health
 ```
 
-## Modüller / Kaynak Dosyalar
-
-- `main.py`
-- `core/chunker.py`
-- `core/cloner.py`
-- `core/engine.py`
-- `core/queue.py`
-- `core/recorder.py`
-
-## Giriş Noktaları ve Yapılandırma
-
-- `Dockerfile`
-- `kokoro-tts.service`
-- `main.py`
-- `requirements.txt`
-
-## Dağıtım / Çalışma Ortamı
-
-- GitHub: https://github.com/SHapeloglu/nexmeet_v2-kokoro-tts-service
-
-## Diğer Dokümanlar
-
-- `README.md`
+| Dosya | Rol |
+|---|---|
+| `main.py` | FastAPI uç noktaları, API anahtarı, startup |
+| `core/engine.py` | `TTSEngine` tekil nesne: STT, çeviri, sentez, profil yolu (`_peer_hash`), konuşmacı önbelleği (1 saat TTL) |
+| `core/cloner.py` | `KokoClone` → `ChatterboxTTS.from_pretrained(device=cuda/cpu)` |
+| `core/queue.py`, `core/chunker.py` | İstek kuyruğu, ses parçalama |
+| `core/recorder.py` | Oturum kayıtları |
+| `Dockerfile`, `kokoro-tts.service` | Dağıtım |
 
 ## Mimari Kararlar
 
-_Önemli tasarım kararlarını ve gerekçelerini buraya ekleyin (ör. "X yerine Y seçildi çünkü ...")._
+- **Ses klonlama için GPU** — gerçek zamanlıya yakın gecikme için T4 gerekli.
+- **Profil dosya adı hash'li** (`_peer_hash`) — v3'teki doğrudan `peer_id` kullanımından daha güvenli.
+- v3'te maliyet nedeniyle CPU Kokoro'ya geçildi; bu repo GPU seçeneği için referans.
