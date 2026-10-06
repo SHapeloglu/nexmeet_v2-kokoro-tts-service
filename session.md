@@ -10,7 +10,7 @@
 
 ## 2026-06-25
 
-- Kokoro TTS service initial commit (GPU, ses klonlama tasarımı).
+- Kokoro TTS servisinin ilk commit'i (GPU, ses klonlama tasarımı).
 
 ---
 
