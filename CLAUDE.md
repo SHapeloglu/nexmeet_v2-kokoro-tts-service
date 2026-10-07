@@ -1,5 +1,7 @@
 # CLAUDE.md — NexMeet Kokoro TTS Service (v2, GPU tasarımı — arşiv)
 
+> 🗄️ **ARŞİV (2026-10-07):** Bu sürüm artık geliştirilmiyor. Güncel sürüm: **[SHapeloglu/nexmeet-tts_v3](https://github.com/SHapeloglu/nexmeet-tts_v3)** (canlı TTS servisi). Bağlanmamış ses klonlama ve kullanılmayan kayıt uçları v3 `backlog.md`'de not edildi.
+
 NexMeet v2 için tasarlanan **ses klonlamalı** konuşma çevirisi servisi: Whisper **small** (STT) → deep-translator (TR→EN) → **ChatterboxTTS** ile konuşmacının klonlanmış sesi (`core/cloner.py`, CUDA varsa GPU). Hedef ortam AWS EC2 g4dn.xlarge (NVIDIA T4), `/home/ubuntu/kokoro-tts-service`, systemd `kokoro-tts.service`, port 5000. Ek: kuyruk (`core/queue.py`), parçalama (`core/chunker.py`), kayıt yöneticisi (`core/recorder.py`).
 
 - GitHub: https://github.com/SHapeloglu/nexmeet_v2-kokoro-tts-service — **PUBLIC repo** (tek yükleme, 2026-06-25)

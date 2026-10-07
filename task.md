@@ -1,5 +1,7 @@
 # task.md — NexMeet Kokoro TTS Service (v2) Görevleri
 
+> 🗄️ 2026-10-07: repo arşivlendi — güncel görevler v3 reposunda.
+
 ## 🔜 Sıradaki
 
 - [ ] Repo için karar (kullanıcı): arşivle mi, GPU seçeneği olarak bakımda mı tutulsun?

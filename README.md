@@ -1,5 +1,7 @@
 # 🎙️ NexMeet Kokoro TTS Service
 
+> 🗄️ **ARŞİV (2026-10-07):** Bu sürüm artık geliştirilmiyor. Güncel sürüm: **[SHapeloglu/nexmeet-tts_v3](https://github.com/SHapeloglu/nexmeet-tts_v3)** (canlı TTS servisi). Bağlanmamış ses klonlama ve kullanılmayan kayıt uçları v3 `backlog.md`'de not edildi.
+
 Gerçek zamanlı video konferans için **ses klonlamalı konuşma çevirisi** servisi.
 
 Kullanıcı kendi sesinde **Türkçe** konuşur → sistem otomatik olarak **İngilizce**'ye çevirir ve konuşmacının **klonlanmış sesiyle** karşı tarafa iletir.
